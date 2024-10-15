@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+}
+
+body {
+    background-color: #1c1626;
+    overflow-x: hidden;
+
+}
+
+.main {
+    width: 35vw;
+    height: 500px;
+    background: #1c1626;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #000;
+    margin: auto;
+    margin-top: 50px;
+}
+
+#chk {
+    display: none;
+}
+
+.signup {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+label {
+    color: #fff;
+    font-size: 2.3em;
+    justify-content: center;
+    display: flex;
+    margin: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .5s ease-in-out;
+}
+
+input {
+    width: 60%;
+    height: 10px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin: 20px auto;
+    padding: 17px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+button {
+    width: 60%;
+    height: 40px;
+    margin: 10px auto;
+    justify-content: center;
+    display: block;
+    color: #fff;
+    background: #573b8a;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 30px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    transition: .2s ease-in;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #6d44b8;
+}
+
+.login {
+    height: 460px;
+    background: #eee;
+    border-radius: 60% / 10%;
+    transform: translateY(-180px);
+    transition: .8s ease-in-out;
+}
+
+.login label {
+    color: #573b8a;
+    transform: scale(.6);
+}
+
+#chk:checked~.login {
+    transform: translateY(-500px);
+}
+
+#chk:checked~.login label {
+    transform: scale(1);
+}
+
+#chk:checked~.signup label {
+    transform: scale(.6);
+}
+.passwords{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 280px;
+    margin: auto;
+    height: 45px;
+}
+.pas{
+    width: 100%;
+}
+.passwords span{
+    color: white;
+    cursor: pointer;
+}
+
+
+.bg-red-200 {
+    background-color: #fecaca; 
+  }
+  
+   .bg-red-800 {
+    background-color: #991b1b; 
+  }
+  
+  .border-red-500 {
+    border-color: #ef4444;
+  }
+  
+  .dark .border-red-700 {
+    border-color: #b91c1c;
+  }
+  
+  .text-red-900 {
+    color: #7f1d1d;
+  }
+ .text-red-100 {
+    color: #f3f4f6;
+  }
+  
+  .p-2 {
+    padding: 0.5rem;
+  }
+  
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .items-center {
+    align-items: center;
+  }
+  
+  .transform {
+    transform: scale(1.05); 
+  }
+  
+  .h-5 {
+    height: 1.25rem;
+  }
+  
+  .w-5 {
+    width: 1.25rem;
+  }
+  
+  .mr-2 {
+    margin-right: 0.5rem;
+  }
+  
+  .text-red-600 {
+    color: #dc2626;
+  }
+  
+  .text-xs {
+    font-size: 1rem;
+  }
+  
+  .font-semibold {
+    font-weight: 600;
+  }
+  
+  .error{
+    position: absolute;
+    top: 30px;
+    right: -100%;
+    transition: all 0.4s;
+  }
+  .right{
+    right: 30px;
+  }

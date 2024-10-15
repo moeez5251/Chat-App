@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <title>Xheikh Chatting Room</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true">
+        <div class="signup">
+            <form class="form1">
+                <label for="chk" aria-hidden="true">Sign up</label>
+                <input type="text" name="signup-username" placeholder="User name" required>
+                <input type="email" name="signup-email" placeholder="Email" required>
+                <div class="passwords">
+                    <input class="pas" type="password" name="signup-pass" placeholder="Password" required>
+                    <span class="material-symbols-outlined">
+                        visibility_off
+                    </span>
+                </div>
+
+                <button class="signup-btn">Sign up</button>
+            </form>
+        </div>
+
+        <div class="login">
+            <form class="form2">
+                <label for="chk" aria-hidden="true">Login</label>
+                <input type="email" name="sign-email" placeholder="Email" required>
+                <div class="passwords">
+                    <input class="pas" type="password" name="sign-pass" placeholder="Password" required>
+                    <span style="color: black;" class="material-symbols-outlined">
+                        visibility_off
+                    </span>
+                </div>
+                <button>Login</button>
+            </form>
+        </div>
+    </div>
+    <div class="error">
+        <div class="p-4">
+            <div
+              role="alert"
+              class="bg-red-800 border-l-4 border-red-500 border-red-700 text-red-900 text-red-100 p-2 rounded-lg flex items-center transform scale-105"
+            >
+              <svg
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                fill="none"
+                class="h-5 w-5 flex-shrink-0 mr-2 text-red-600"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13 16h-1v-4h1m0-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                ></path>
+              </svg>
+              <p class="text-xs font-semibold">Error - Something went wrong.</p>
+            </div>
+          </div>
+            
+
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/appwrite@16.0.0"></script>
+<script>
+    const client = new Appwrite.Client();
+    const account = new Appwrite.Account(client);
+    const databases = new Appwrite.Databases(client);
+    client.setEndpoint('https://cloud.appwrite.io/v1').setProject('670b90ac0015a41ad3de');
+</script>
+<script src="chat.js"></script>
+
+</html>

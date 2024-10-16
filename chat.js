@@ -20,33 +20,21 @@ client
 //         console.error('Error logging out:', error);
 //       });
 
-// const unsubscribe = ()=>{
+const unsubscribe = ()=>{
 
-//     let promise = databases.listDocuments(
-//         "670b9206003d3b420b50",
-//     "670b923a0031c8e659ec",
+    let promise = databases.listDocuments(
+        "670b9206003d3b420b50",
+    "670b923a0031c8e659ec",
 
-// );
+);
 
-// promise.then(function (response) {
-//     console.log(response);
-// }, function (error) {
-//     console.log(error);
-// });
-// }  
+promise.then(function (response) {
+    console.log(response);
+}, function (error) {
+    console.log(error);
+});
+}  
 
-// const promise = databases.createDocument(
-//     '670b9206003d3b420b50',
-//     '670b923a0031c8e659ec',
-//     Appwrite.ID.unique(),
-//     {
-//         "Message": "Hello world",
-//         "user-name": "Moeez",
-//         "Time": `${new Date()}`
-//     }
-
-// );
-// promise.then(()=>{unsubscribe()})
 
 document.querySelectorAll(".passwords").forEach(e => {
     e.querySelector("span").addEventListener("click", () => {
@@ -62,11 +50,19 @@ document.querySelectorAll(".passwords").forEach(e => {
 })
 document.querySelector(".form1").addEventListener("submit", (e) => {
     e.preventDefault();
+    if (document.querySelector(`input[name="signup-pass"]`).value.length < 8) {
+        document.querySelector(".error__title").innerHTML = "Password Must be Greater than 8 digits";
+        document.querySelector(".error").classList.add("right")
+        setTimeout(() => {
+            document.querySelector(".error").classList.remove("right")
+
+        }, 3000);
+        return;
+    }
     const create = account.create(`${document.querySelector(`input[name="signup-username"]`).value}`, `${document.querySelector(`input[name="signup-email"]`).value}`, `${document.querySelector(`input[name="signup-pass"]`).value}`);
     create.then(function (response) {
-        console.log(response);
     }, function () {
-        document.querySelector(".text-xs").innerHTML = "User with Credential already exist";
+        document.querySelector(".error__title").innerHTML = "User with this credential already exist";
         document.querySelector(".error").classList.add("right")
         setTimeout(() => {
             document.querySelector(".error").classList.remove("right")
@@ -81,10 +77,9 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
     const login = account.createEmailPasswordSession(`${document.querySelector(`input[name="sign-email"]`).value}`, `${document.querySelector(`input[name="sign-pass"]`).value}`);
     login.then(function (response) {
         document.querySelector(".main").style.display = "none"
-        console.log(response);
 
     }, function () {
-        document.querySelector(".text-xs").innerHTML = "Invalid Email / Password";
+        document.querySelector(".error__title").innerHTML = "Invalid Email / Password";
         document.querySelector(".error").classList.add("right")
         setTimeout(() => {
             document.querySelector(".error").classList.remove("right")
@@ -96,6 +91,23 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
 
 })
 
+setInterval(() => {
+    document.querySelector(".chat-box").style.borderColor="#"+ Math.floor(Math.random() * 16777215).toString(16);// 16777215 is max 24 bit value 
+}, 1000);
 
+document.querySelector(".send-button").addEventListener("click",(e)=>{
 
-
+    //  const promise = databases.createDocument(
+    //         '670b9206003d3b420b50',
+    //         '670b923a0031c8e659ec',
+    //         Appwrite.ID.unique(),
+    //         {
+    //             "Message": `${document.querySelector(".message-inp").value}`,
+    //             "user-name": `${`,
+    //             "Time": `${new Date()}`
+    //         }
+        
+    //     );
+    //     promise.then(()=>{unsubscribe()})
+        
+})

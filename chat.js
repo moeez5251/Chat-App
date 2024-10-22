@@ -2,40 +2,49 @@ client
     .setEndpoint('https://cloud.appwrite.io/v1')
     .setProject('670b90ac0015a41ad3de');
 
-// const promise = account.createEmailPasswordSession('moeez4@gmail.com', '52518999');
+let accountdetails = "";
+async function gettingaccount() {
+    let details = await account.get();
+    accountdetails = details;
+}
 
-// promise.then(function (response) {
-//     console.log(response); // Success
-// }, function (error) {
-
-//     console.log(error); // Failure
-// });
-
-
-// account.deleteSession("")
-//   .then(() => {
-//         console.log('Logged out successfully.');
-//       })
-//   .catch((error) => {
-//         console.error('Error logging out:', error);
-//       });
-
-const unsubscribe = ()=>{
+const unsubscribe = () => {
 
     let promise = databases.listDocuments(
         "670b9206003d3b420b50",
-    "670b923a0031c8e659ec",
+        "670b923a0031c8e659ec",
 
-);
+    );
+    promise.then(function (response) {
+        document.querySelector(".chat-box").innerHTML = "";
+        for (const element of response.documents) {
+            document.querySelector(".chat-box").innerHTML += ` 
+            <div class="mess">
+                <div class="pic">
+                    <img src="Profile Logo.png" alt="Profile Logo">
+                </div>
+                <div class="ct" >
+                <div class="chat-m">${element.username}</div>
+                <div class="chat-me">${element.Message}</div>
+                <div class="time">${element.Time}</div>
+                </div>
+            </div>`
+        }
+    }, function (error) {
+        console.log(error);
+    });
+}
 
-promise.then(function (response) {
-    console.log(response);
-}, function (error) {
-    console.log(error);
-});
-}  
-
-
+if (localStorage.getItem("cookieFallback") === null || localStorage.getItem("cookieFallback") === '[]') {
+    document.querySelector(".main").style.display = "block";
+    document.querySelector(".chat").style.display = "none";
+}
+else {
+    document.querySelector(".main").style.display = "none";
+    document.querySelector(".chat").style.display = "block";
+    unsubscribe();
+    gettingaccount();
+}
 document.querySelectorAll(".passwords").forEach(e => {
     e.querySelector("span").addEventListener("click", () => {
         if (e.querySelector("span").innerHTML.trim() === "visibility_off") {
@@ -60,7 +69,13 @@ document.querySelector(".form1").addEventListener("submit", (e) => {
         return;
     }
     const create = account.create(`${document.querySelector(`input[name="signup-username"]`).value}`, `${document.querySelector(`input[name="signup-email"]`).value}`, `${document.querySelector(`input[name="signup-pass"]`).value}`);
-    create.then(function (response) {
+    create.then(function () {
+        document.querySelectorAll("input").forEach(e => e.value = "");
+        document.querySelector(".suc").classList.add("right");
+        setTimeout(() => {
+            document.querySelector(".suc").classList.remove("right")
+
+        }, 2000);
     }, function () {
         document.querySelector(".error__title").innerHTML = "User with this credential already exist";
         document.querySelector(".error").classList.add("right")
@@ -75,39 +90,53 @@ document.querySelector(".form1").addEventListener("submit", (e) => {
 document.querySelector(".form2").addEventListener("submit", (e) => {
     e.preventDefault();
     const login = account.createEmailPasswordSession(`${document.querySelector(`input[name="sign-email"]`).value}`, `${document.querySelector(`input[name="sign-pass"]`).value}`);
-    login.then(function (response) {
-        document.querySelector(".main").style.display = "none"
+    login.then(
+        function () {
+            document.querySelector(".main").style.display = "none"
+            document.querySelector(".chat").style.display = "block";
+            unsubscribe();
+            gettingaccount();
 
-    }, function () {
-        document.querySelector(".error__title").innerHTML = "Invalid Email / Password";
-        document.querySelector(".error").classList.add("right")
-        setTimeout(() => {
-            document.querySelector(".error").classList.remove("right")
+        }, function () {
+            document.querySelector(".error__title").innerHTML = "Invalid Email / Password";
+            document.querySelector(".error").classList.add("right")
+            setTimeout(() => {
+                document.querySelector(".error").classList.remove("right")
 
-        }, 2000);
+            }, 2000);
 
-
-    });
+        });
 
 })
 
 setInterval(() => {
-    document.querySelector(".chat-box").style.borderColor="#"+ Math.floor(Math.random() * 16777215).toString(16);// 16777215 is max 24 bit value 
+    document.querySelector(".chat-box").style.borderColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
 }, 1000);
 
-document.querySelector(".send-button").addEventListener("click",(e)=>{
 
-    //  const promise = databases.createDocument(
-    //         '670b9206003d3b420b50',
-    //         '670b923a0031c8e659ec',
-    //         Appwrite.ID.unique(),
-    //         {
-    //             "Message": `${document.querySelector(".message-inp").value}`,
-    //             "user-name": `${`,
-    //             "Time": `${new Date()}`
-    //         }
-        
-    //     );
-    //     promise.then(()=>{unsubscribe()})
-        
+document.querySelector(".send-button").addEventListener("click", (e) => {
+    const promise = databases.createDocument(
+        '670b9206003d3b420b50',
+        '670b923a0031c8e659ec',
+        Appwrite.ID.unique(),
+        {
+            "Message": `${document.querySelector(".message-inp").value}`,
+            "username": `${accountdetails.$id}`,
+            "Time": `${new Date().toDateString()} ${new Date().toTimeString().split("GMT")[0]}`
+        }
+
+    );
+    promise.then(() => {
+        unsubscribe();
+        document.querySelector(".message-inp").value = "";
+    })
+
+})
+document.querySelector(".logout span").addEventListener("click", () => {
+    account.deleteSession("")
+        .then(() => {
+            document.querySelector(".main").style.display = "block";
+            document.querySelector(".chat").style.display = "none";
+        })
+
 })

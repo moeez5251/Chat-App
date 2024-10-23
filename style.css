@@ -191,6 +191,7 @@ button:hover {
   top: 30px;
   right: -200%;
   transition: all 0.4s;
+  z-index: 10;
 }
 
 .error__icon {

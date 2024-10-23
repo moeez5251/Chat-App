@@ -185,7 +185,16 @@ setInterval(() => {
 }, 1000);
 
 
-document.querySelector(".send-button").addEventListener("click", (e) => {
+document.querySelector(".send-button").addEventListener("click", () => {
+    if(document.querySelector(".message-inp").value.trim()===""){
+        document.querySelector(".error__title").innerHTML = "Can't Send Empty Message";
+            document.querySelector(".error").classList.add("right")
+            setTimeout(() => {
+                document.querySelector(".error").classList.remove("right")
+
+            }, 1000);
+        return;
+    }
     const promise = databases.createDocument(
         '670b9206003d3b420b50',
         '670b923a0031c8e659ec',

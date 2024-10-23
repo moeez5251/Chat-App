@@ -8,6 +8,15 @@ async function gettingaccount() {
     accountdetails = details;
 }
 
+async function gettingid(a) {
+    let promise =await  databases.listDocuments(
+        "670b9206003d3b420b50",
+        "670b923a0031c8e659ec",
+
+    );
+    return (promise.documents[a].$id);
+}
+
 const unsubscribe = () => {
 
     let promise = databases.listDocuments(
@@ -19,7 +28,15 @@ const unsubscribe = () => {
         document.querySelector(".chat-box").innerHTML = "";
         for (const element of response.documents) {
             document.querySelector(".chat-box").innerHTML += ` 
-            <div class="mess">
+           <div class="mess">
+                <div class="icons">
+                    <span class="material-symbols-outlined editor">
+                        edit
+                        </span>
+                        <span class="material-symbols-outlined delete">
+                            delete
+                            </span>
+                </div>
                 <div class="pic">
                     <img src="Profile Logo.png" alt="Profile Logo">
                 </div>
@@ -30,10 +47,48 @@ const unsubscribe = () => {
                 </div>
             </div>`
         }
+
+        document.querySelectorAll(".editor").forEach((element, index) => {
+            element.addEventListener("click", () => {
+                (async function update() {
+                    const id = await gettingid(index)
+                    let Updated_doc=prompt("Enter Message")
+                    const result = await databases.updateDocument(
+        
+                        '670b9206003d3b420b50', 
+                        '670b923a0031c8e659ec', 
+                        `${id}`, 
+                        {Message:`${Updated_doc}`}, 
+                    );
+                    unsubscribe()
+                })()
+            })
+        })
+        document.querySelectorAll(".delete").forEach((element, index) => {
+            element.addEventListener("click", () => {
+                (async function update() {
+                    const id = await gettingid(index)
+                    if(confirm("Do you want to Delete This Message")){
+
+                        const result = await databases.deleteDocument(
+                            
+                            '670b9206003d3b420b50', 
+                            '670b923a0031c8e659ec', 
+                            `${id}`, 
+                        );
+                        unsubscribe()
+                    }
+                    else{
+                        return;
+                    }
+                })()
+            })
+        })
     }, function (error) {
-        console.log(error);
     });
 }
+
+
 
 if (localStorage.getItem("cookieFallback") === null || localStorage.getItem("cookieFallback") === '[]') {
     document.querySelector(".main").style.display = "block";
@@ -140,3 +195,5 @@ document.querySelector(".logout span").addEventListener("click", () => {
         })
 
 })
+  
+

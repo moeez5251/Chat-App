@@ -2,6 +2,14 @@ client
     .setEndpoint('https://cloud.appwrite.io/v1')
     .setProject('670b90ac0015a41ad3de');
 
+    window.addEventListener("load",()=>{
+        setTimeout(() => {
+            document.querySelector(".loading").style.top="-200%";
+        }, 2000);
+        setTimeout(() => {
+            document.querySelector(".loading").remove();
+        }, 3000);
+    })
 let accountdetails = "";
 async function gettingaccount() {
     let details = await account.get();

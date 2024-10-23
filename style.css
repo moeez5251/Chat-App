@@ -485,4 +485,16 @@ button:hover {
   .logout span{
     font-size: 25px;
   }
+  .chat-box{
+    height: 70vh;
+  }
+}
+@media screen and (max-width:380px) {
+  .mess{
+    height: 20%;
+  }
+  .chat-box{
+    left: 4%;
+    width: 91vw;
+  }
 }

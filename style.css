@@ -457,6 +457,12 @@ button:hover {
   .logout span{
     font-size: 25px;
   }
+  .mess{
+    height: 20%;
+  }
+  .message{
+    width: 97%;
+  }
 }
 @media screen and (max-width:440px) {
   .main{

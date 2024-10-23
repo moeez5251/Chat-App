@@ -2,14 +2,14 @@ client
     .setEndpoint('https://cloud.appwrite.io/v1')
     .setProject('670b90ac0015a41ad3de');
 
-    window.addEventListener("load",()=>{
-        setTimeout(() => {
-            document.querySelector(".loading").style.top="-200%";
-        }, 2000);
-        setTimeout(() => {
-            document.querySelector(".loading").remove();
-        }, 3000);
-    })
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.querySelector(".loading").style.top = "-200%";
+    }, 2000);
+    setTimeout(() => {
+        document.querySelector(".loading").remove();
+    }, 3000);
+})
 let accountdetails = "";
 async function gettingaccount() {
     let details = await account.get();
@@ -17,7 +17,7 @@ async function gettingaccount() {
 }
 
 async function gettingid(a) {
-    let promise =await  databases.listDocuments(
+    let promise = await databases.listDocuments(
         "670b9206003d3b420b50",
         "670b923a0031c8e659ec",
 
@@ -54,19 +54,20 @@ const unsubscribe = () => {
                 <div class="time">${element.Time}</div>
                 </div>
             </div>`
+
         }
 
         document.querySelectorAll(".editor").forEach((element, index) => {
             element.addEventListener("click", () => {
                 (async function update() {
                     const id = await gettingid(index)
-                    let Updated_doc=prompt("Enter Message")
+                    let Updated_doc = prompt("Enter Message")
                     const result = await databases.updateDocument(
-        
-                        '670b9206003d3b420b50', 
-                        '670b923a0031c8e659ec', 
-                        `${id}`, 
-                        {Message:`${Updated_doc}`}, 
+
+                        '670b9206003d3b420b50',
+                        '670b923a0031c8e659ec',
+                        `${id}`,
+                        { Message: `${Updated_doc}` },
                     );
                     unsubscribe()
                 })()
@@ -76,17 +77,17 @@ const unsubscribe = () => {
             element.addEventListener("click", () => {
                 (async function update() {
                     const id = await gettingid(index)
-                    if(confirm("Do you want to Delete This Message")){
+                    if (confirm("Do you want to Delete This Message")) {
 
                         const result = await databases.deleteDocument(
-                            
-                            '670b9206003d3b420b50', 
-                            '670b923a0031c8e659ec', 
-                            `${id}`, 
+
+                            '670b9206003d3b420b50',
+                            '670b923a0031c8e659ec',
+                            `${id}`,
                         );
                         unsubscribe()
                     }
-                    else{
+                    else {
                         return;
                     }
                 })()
@@ -94,6 +95,7 @@ const unsubscribe = () => {
         })
     }, function (error) {
     });
+
 }
 
 
@@ -105,7 +107,10 @@ if (localStorage.getItem("cookieFallback") === null || localStorage.getItem("coo
 else {
     document.querySelector(".main").style.display = "none";
     document.querySelector(".chat").style.display = "block";
-    unsubscribe();
+    setInterval(() => {
+        unsubscribe();
+
+    }, 500);
     gettingaccount();
 }
 document.querySelectorAll(".passwords").forEach(e => {
@@ -157,7 +162,10 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
         function () {
             document.querySelector(".main").style.display = "none"
             document.querySelector(".chat").style.display = "block";
-            unsubscribe();
+            setInterval(() => {
+                unsubscribe();
+
+            }, 500);
             gettingaccount();
 
         }, function () {
@@ -203,5 +211,21 @@ document.querySelector(".logout span").addEventListener("click", () => {
         })
 
 })
-  
+const targetNode = document.querySelector(".chat-box");
 
+const observerCallback = function () {
+    document.querySelectorAll(".mess").forEach(e => {
+        if (e.querySelector(".chat-m").innerHTML !== accountdetails.$id) {
+            e.querySelector(".icons").style.display = "none";
+        }
+    })
+};
+
+const observerOptions = {
+    childList: true,
+    subtree: true
+};
+
+const observer = new MutationObserver(observerCallback);
+
+observer.observe(targetNode, observerOptions);

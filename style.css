@@ -458,10 +458,13 @@ button:hover {
     font-size: 25px;
   }
   .mess{
-    height: 20%;
+    height: 15%;
   }
   .message{
     width: 97%;
+  }
+  .time{
+    font-size: 10px;
   }
 }
 @media screen and (max-width:440px) {

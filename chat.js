@@ -62,6 +62,9 @@ const unsubscribe = () => {
                 (async function update() {
                     const id = await gettingid(index)
                     let Updated_doc = prompt("Enter Message")
+                    if (Updated_doc.trim() === "") {
+                        return;
+                    }
                     const result = await databases.updateDocument(
 
                         '670b9206003d3b420b50',
@@ -69,7 +72,6 @@ const unsubscribe = () => {
                         `${id}`,
                         { Message: `${Updated_doc}` },
                     );
-                    unsubscribe()
                 })()
             })
         })
@@ -85,7 +87,6 @@ const unsubscribe = () => {
                             '670b923a0031c8e659ec',
                             `${id}`,
                         );
-                        unsubscribe()
                     }
                     else {
                         return;
@@ -93,24 +94,32 @@ const unsubscribe = () => {
                 })()
             })
         })
-    }, function (error) {
+    }, function () {
     });
 
 }
-
-
+let globalIntervalID;
+function startInterval() {
+    globalIntervalID = setInterval(() => {
+        unsubscribe();
+    }, 500);
+  }
+  
+  function stopGlobalInterval() {
+    if (globalIntervalID) {
+      clearInterval(globalIntervalID);
+    }
+  }
 
 if (localStorage.getItem("cookieFallback") === null || localStorage.getItem("cookieFallback") === '[]') {
     document.querySelector(".main").style.display = "block";
     document.querySelector(".chat").style.display = "none";
+    stopGlobalInterval();
 }
 else {
     document.querySelector(".main").style.display = "none";
     document.querySelector(".chat").style.display = "block";
-    setInterval(() => {
-        unsubscribe();
-
-    }, 500);
+    startInterval();
     gettingaccount();
 }
 document.querySelectorAll(".passwords").forEach(e => {
@@ -136,6 +145,17 @@ document.querySelector(".form1").addEventListener("submit", (e) => {
         }, 3000);
         return;
     }
+    for (let i = 0; i < document.querySelector(`input[name="signup-username"]`).value.length; i++) {
+        if (document.querySelector(`input[name="signup-username"]`).value.at(i) === " ") {
+            document.querySelector(".error__title").innerHTML = "Username Does not contain any spaces or special characters";
+            document.querySelector(".error").classList.add("right")
+            setTimeout(() => {
+                document.querySelector(".error").classList.remove("right")
+
+            }, 3000);
+            return;
+        }
+    }
     const create = account.create(`${document.querySelector(`input[name="signup-username"]`).value}`, `${document.querySelector(`input[name="signup-email"]`).value}`, `${document.querySelector(`input[name="signup-pass"]`).value}`);
     create.then(function () {
         document.querySelectorAll("input").forEach(e => e.value = "");
@@ -144,12 +164,12 @@ document.querySelector(".form1").addEventListener("submit", (e) => {
             document.querySelector(".suc").classList.remove("right")
 
         }, 2000);
-    }, function () {
+    }, function (er) {
         document.querySelector(".error__title").innerHTML = "User with this credential already exist";
         document.querySelector(".error").classList.add("right")
         setTimeout(() => {
             document.querySelector(".error").classList.remove("right")
-
+            console.log(er);
         }, 2000);
 
     });
@@ -162,10 +182,7 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
         function () {
             document.querySelector(".main").style.display = "none"
             document.querySelector(".chat").style.display = "block";
-            setInterval(() => {
-                unsubscribe();
-
-            }, 500);
+            startInterval();
             gettingaccount();
 
         }, function () {
@@ -186,13 +203,13 @@ setInterval(() => {
 
 
 document.querySelector(".send-button").addEventListener("click", () => {
-    if(document.querySelector(".message-inp").value.trim()===""){
+    if (document.querySelector(".message-inp").value.trim() === "") {
         document.querySelector(".error__title").innerHTML = "Can't Send Empty Message";
-            document.querySelector(".error").classList.add("right")
-            setTimeout(() => {
-                document.querySelector(".error").classList.remove("right")
+        document.querySelector(".error").classList.add("right")
+        setTimeout(() => {
+            document.querySelector(".error").classList.remove("right")
 
-            }, 1000);
+        }, 1000);
         return;
     }
     const promise = databases.createDocument(
@@ -207,7 +224,6 @@ document.querySelector(".send-button").addEventListener("click", () => {
 
     );
     promise.then(() => {
-        unsubscribe();
         document.querySelector(".message-inp").value = "";
     })
 
@@ -217,6 +233,7 @@ document.querySelector(".logout span").addEventListener("click", () => {
         .then(() => {
             document.querySelector(".main").style.display = "block";
             document.querySelector(".chat").style.display = "none";
+            stopGlobalInterval();
         })
 
 })

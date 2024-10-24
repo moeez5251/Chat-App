@@ -231,9 +231,9 @@ document.querySelector(".send-button").addEventListener("click", () => {
 document.querySelector(".logout span").addEventListener("click", () => {
     account.deleteSession("")
         .then(() => {
+            stopGlobalInterval();
             document.querySelector(".main").style.display = "block";
             document.querySelector(".chat").style.display = "none";
-            stopGlobalInterval();
         })
 
 })

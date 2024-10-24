@@ -54,7 +54,7 @@ const unsubscribe = () => {
                 <div class="time">${element.Time}</div>
                 </div>
             </div>`
-
+           document.querySelector(".chat-box").scrollTop = document.querySelector(".chat-box").scrollHeight;
         }
 
         document.querySelectorAll(".editor").forEach((element, index) => {
@@ -114,6 +114,7 @@ function startInterval() {
 if (localStorage.getItem("cookieFallback") === null || localStorage.getItem("cookieFallback") === '[]') {
     document.querySelector(".main").style.display = "block";
     document.querySelector(".chat").style.display = "none";
+    localStorage.removeItem("cookieFallback");
     stopGlobalInterval();
 }
 else {

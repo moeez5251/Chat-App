@@ -170,7 +170,6 @@ document.querySelector(".form1").addEventListener("submit", (e) => {
         document.querySelector(".error").classList.add("right")
         setTimeout(() => {
             document.querySelector(".error").classList.remove("right")
-            console.log(er);
         }, 2000);
 
     });

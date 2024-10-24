@@ -112,10 +112,10 @@ function startInterval() {
   }
 
 if (localStorage.getItem("cookieFallback") === null || localStorage.getItem("cookieFallback") === '[]') {
+    stopGlobalInterval();
+    localStorage.removeItem("cookieFallback");
     document.querySelector(".main").style.display = "block";
     document.querySelector(".chat").style.display = "none";
-    localStorage.removeItem("cookieFallback");
-    stopGlobalInterval();
 }
 else {
     document.querySelector(".main").style.display = "none";
@@ -165,7 +165,7 @@ document.querySelector(".form1").addEventListener("submit", (e) => {
             document.querySelector(".suc").classList.remove("right")
 
         }, 2000);
-    }, function (er) {
+    }, function () {
         document.querySelector(".error__title").innerHTML = "User with this credential already exist";
         document.querySelector(".error").classList.add("right")
         setTimeout(() => {

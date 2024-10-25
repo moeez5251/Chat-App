@@ -54,7 +54,7 @@ const unsubscribe = () => {
                 <div class="time">${element.Time}</div>
                 </div>
             </div>`
-           document.querySelector(".chat-box").scrollTop = document.querySelector(".chat-box").scrollHeight;
+            document.querySelector(".chat-box").scrollTop = document.querySelector(".chat-box").scrollHeight;
         }
 
         document.querySelectorAll(".editor").forEach((element, index) => {
@@ -70,7 +70,11 @@ const unsubscribe = () => {
                         '670b9206003d3b420b50',
                         '670b923a0031c8e659ec',
                         `${id}`,
-                        { Message: `${Updated_doc}` },
+                        {
+                            "Message": `${Updated_doc}`,
+                            "Time": `${new Date().toDateString()} ${new Date().toTimeString().split("GMT")[0]}`
+
+                        },
                     );
                 })()
             })
@@ -103,13 +107,13 @@ function startInterval() {
     globalIntervalID = setInterval(() => {
         unsubscribe();
     }, 500);
-  }
-  
-  function stopGlobalInterval() {
+}
+
+function stopGlobalInterval() {
     if (globalIntervalID) {
-      clearInterval(globalIntervalID);
+        clearInterval(globalIntervalID);
     }
-  }
+}
 
 if (localStorage.getItem("cookieFallback") === null || localStorage.getItem("cookieFallback") === '[]') {
     stopGlobalInterval();
@@ -160,6 +164,8 @@ document.querySelector(".form1").addEventListener("submit", (e) => {
     const create = account.create(`${document.querySelector(`input[name="signup-username"]`).value}`, `${document.querySelector(`input[name="signup-email"]`).value}`, `${document.querySelector(`input[name="signup-pass"]`).value}`);
     create.then(function () {
         document.querySelectorAll("input").forEach(e => e.value = "");
+        document.querySelector(".success__title").innerHTML = "Account Created Successfully";
+
         document.querySelector(".suc").classList.add("right");
         setTimeout(() => {
             document.querySelector(".suc").classList.remove("right")

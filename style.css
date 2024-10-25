@@ -13,15 +13,18 @@ body {
   overflow: hidden;
 
 }
-::-webkit-scrollbar{
+
+::-webkit-scrollbar {
   background-color: gray;
   border-radius: 50px;
 }
-::-webkit-scrollbar-thumb{
+
+::-webkit-scrollbar-thumb {
   background-color: white;
   border-radius: 50px;
 }
-.loading{
+
+.loading {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,12 +35,13 @@ body {
   background-color: black;
   transition: all 1s;
 }
+
 .loader {
   width: 54.8px;
   height: 54.8px;
   color: #554cb5;
   position: relative;
-  background: radial-gradient(11.2px,currentColor 94%,#0000);
+  background: radial-gradient(11.2px, currentColor 94%, #0000);
 }
 
 .loader:before {
@@ -45,13 +49,13 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: radial-gradient(10.08px at bottom right,#0000 94%,currentColor) top    left,
-          radial-gradient(10.08px at bottom left ,#0000 94%,currentColor) top    right,
-          radial-gradient(10.08px at top    right,#0000 94%,currentColor) bottom left,
-          radial-gradient(10.08px at top    left ,#0000 94%,currentColor) bottom right;
+  background: radial-gradient(10.08px at bottom right, #0000 94%, currentColor) top left,
+    radial-gradient(10.08px at bottom left, #0000 94%, currentColor) top right,
+    radial-gradient(10.08px at top right, #0000 94%, currentColor) bottom left,
+    radial-gradient(10.08px at top left, #0000 94%, currentColor) bottom right;
   background-size: 22.4px 22.4px;
   background-repeat: no-repeat;
-  animation: loader 1.5s infinite cubic-bezier(0.3,1,0,1);
+  animation: loader 1.5s infinite cubic-bezier(0.3, 1, 0, 1);
 }
 
 @keyframes loader {
@@ -70,6 +74,7 @@ body {
     transform: rotate(90deg);
   }
 }
+
 .main {
   width: 45%;
   height: 500px;
@@ -318,12 +323,14 @@ button:hover {
   padding: 7px 3px;
   border-radius: 20px;
   position: relative;
-  
+
 }
-.pic{
+
+.pic {
   position: relative;
   top: 4px;
 }
+
 .pic img {
   width: 40px;
 }
@@ -343,28 +350,33 @@ button:hover {
   bottom: 3px;
   font-style: italic;
 }
-.chat-m{
+
+.chat-m {
   font-size: 14px;
   font-weight: bolder;
 }
-.logout{
+
+.logout {
   width: fit-content;
   position: absolute;
   right: 10%;
   top: 3%;
 }
-.logout span{
+
+.logout span {
   color: white;
   cursor: pointer;
   font-size: 35px;
 }
 
-.suc{
+.suc {
   position: fixed;
   top: 42px;
   right: -200%;
   transition: all 0.2s;
+  z-index: 10;
 }
+
 .success {
   width: 320px;
   padding: 12px;
@@ -387,7 +399,7 @@ button:hover {
 
 .success__icon path {
   fill: #84D65A;
-  
+
 }
 
 .success__title {
@@ -406,94 +418,116 @@ button:hover {
 .success__close path {
   fill: #2B641E;
 }
+
 .right {
   right: 30px;
 }
+
 .icons {
-  position:absolute ;
+  position: absolute;
   right: 10px;
-  top:5px;
+  top: 5px;
 }
-.icons span{
+
+.icons span {
   font-size: 19px;
   margin: 0 7px;
   cursor: pointer;
 }
-.icons span:hover{
+
+.icons span:hover {
   color: gray;
 }
+
 @media screen and (max-width:1000px) {
-  .main{
+  .main {
     width: 80%;
   }
 }
+
 @media screen and (max-width:700px) {
-  .mess{
+  .mess {
     min-width: 100%;
     max-width: 100%;
     height: 14%;
   }
-  .chat-box{
-  height: 75vh;
-  left: 9%;
-  width: 88vw;
+
+  .chat-box {
+    height: 75vh;
+    left: 9%;
+    width: 88vw;
   }
-  .message input{
+
+  .message input {
     width: 68%;
   }
-  .message button{
+
+  .message button {
     width: 20%;
 
   }
 }
 
-@media screen and (max-width:550px) { 
-  .chat h1{
+@media screen and (max-width:550px) {
+  .chat h1 {
     font-size: 20px;
   }
-  .logout{
+
+  .logout {
     right: 2%;
     top: 2%;
   }
-  .logout span{
+
+  .logout span {
     font-size: 25px;
   }
-  .mess{
+
+  .mess {
     height: 15%;
   }
-  .message{
+
+  .message {
     width: 97%;
   }
-  .time{
+
+  .time {
     font-size: 10px;
   }
 }
+
 @media screen and (max-width:440px) {
-  .main{
+  .main {
     width: 98%;
   }
-  .passwords span{
+
+  .passwords span {
     right: 5%;
   }
-  .chat h1{
+
+  .chat h1 {
     font-size: 20px;
   }
-  .logout{
+
+  .logout {
     right: 2%;
     top: 2%;
   }
-  .logout span{
+
+  .logout span {
     font-size: 25px;
   }
-  .chat-box{
+
+  .chat-box {
     height: 70vh;
   }
 }
+
 @media screen and (max-width:380px) {
-  .mess{
+  .mess {
     height: 20%;
   }
-  .chat-box{
+
+  .chat-box {
     left: 4%;
     width: 91vw;
   }

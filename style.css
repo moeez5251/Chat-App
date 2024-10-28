@@ -319,11 +319,11 @@ button:hover {
   clear: both;
   background-color: white;
   display: flex;
-  align-items: start;
+  align-items: center;
   padding: 7px 3px;
   border-radius: 20px;
   position: relative;
-
+  height: 15%;
 }
 
 .pic {
@@ -340,6 +340,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  margin: 21px 0px;
 }
 
 .time {
@@ -520,13 +521,11 @@ button:hover {
   .chat-box {
     height: 70vh;
   }
-}
-
-@media screen and (max-width:380px) {
+  
   .mess {
-    height: 20%;
+    height: 22%;
   }
-
+  
   .chat-box {
     left: 4%;
     width: 91vw;

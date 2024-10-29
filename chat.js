@@ -253,6 +253,14 @@ const observerCallback = function () {
     })
 };
 
+window.addEventListener("keydown",(e)=>{
+    if(document.querySelector(".message-inp").value.trim()!==""){
+        let button=document.querySelector(".send-button");
+        if(e.key==="Enter"){
+            button.click();
+        }
+    }
+})
 const observerOptions = {
     childList: true,
     subtree: true

@@ -83,7 +83,7 @@ body {
   border-radius: 10px;
   box-shadow: 5px 20px 50px #000;
   margin: auto;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 #chk {
@@ -443,6 +443,7 @@ button:hover {
 @media screen and (max-width:1000px) {
   .main {
     width: 80%;
+    margin-top: 13px;
   }
 }
 

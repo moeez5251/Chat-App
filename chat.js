@@ -62,7 +62,7 @@ const unsubscribe = () => {
                 (async function update() {
                     const id = await gettingid(index)
                     let Updated_doc = prompt("Enter Message")
-                    if (Updated_doc.trim() === "") {
+                    if (Updated_doc === null) {
                         return;
                     }
                     const result = await databases.updateDocument(
@@ -253,10 +253,10 @@ const observerCallback = function () {
     })
 };
 
-window.addEventListener("keydown",(e)=>{
-    if(document.querySelector(".message-inp").value.trim()!==""){
-        let button=document.querySelector(".send-button");
-        if(e.key==="Enter"){
+window.addEventListener("keydown", (e) => {
+    if (document.querySelector(".message-inp").value.trim() !== "") {
+        let button = document.querySelector(".send-button");
+        if (e.key === "Enter") {
             button.click();
         }
     }

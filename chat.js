@@ -240,7 +240,7 @@ window.addEventListener("keydown", (e) => {
 })
 
 const targetNode = document.querySelector(".chat-box");
-
+let a = true;
 const observerCallback = function () {
     document.querySelectorAll(".mess").forEach(e => {
         if (e.querySelector(".chat-m").innerHTML !== accountdetails.$id) {
@@ -248,11 +248,14 @@ const observerCallback = function () {
                 e.querySelector(".icons").remove();
         }
     })
+    if (a) {
 
-    client.subscribe(
-        `databases.${DBID}.collections.${CID}.documents`, (r) => {
-            unsubscribe();
-        })
+        client.subscribe(
+            `databases.${DBID}.collections.${CID}.documents`, (r) => {
+                unsubscribe();
+            })
+            a=false;
+    }
 };
 
 const observerOptions = {

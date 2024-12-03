@@ -1,14 +1,10 @@
-client.subscribe(
-    `databases.${DBID}.collections.${CID}.documents`, (r) => {
-        console.log(r);
-        unsubscribe();
-    })
-window.addEventListener("load", () => {    
+window.addEventListener("load", () => {
     setTimeout(() => {
         document.querySelector(".loading").style.top = "-200%";
     }, 2000);
     setTimeout(() => {
         document.querySelector(".loading").remove();
+
     }, 3000);
 })
 let accountdetails = "";
@@ -182,11 +178,6 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
             document.querySelector(".chat").style.display = "block";
             gettingaccount();
             unsubscribe();
-            client.subscribe(
-                `databases.${DBID}.collections.${CID}.documents`, (r) => {
-                    console.log(r);
-                    unsubscribe();
-                })
         }, function () {
             document.querySelector(".error__title").innerHTML = "Invalid Email / Password";
             document.querySelector(".error").classList.add("right")
@@ -257,6 +248,11 @@ const observerCallback = function () {
                 e.querySelector(".icons").remove();
         }
     })
+
+    client.subscribe(
+        `databases.${DBID}.collections.${CID}.documents`, (r) => {
+            unsubscribe();
+        })
 };
 
 const observerOptions = {

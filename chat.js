@@ -1,4 +1,3 @@
-
 window.addEventListener("load", () => {
     setTimeout(() => {
         document.querySelector(".loading").style.top = "-200%";
@@ -72,6 +71,7 @@ const unsubscribe = () => {
                             "Time": `${new Date().toDateString()} ${new Date().toTimeString().split("GMT")[0]}`
 
                         },
+
                     )
                 }
 
@@ -89,7 +89,7 @@ const unsubscribe = () => {
                             `${DBID}`,
                             `${CID}`,
                             `${id}`,
-                        );
+                        )
                     }
                     else {
                         return;
@@ -176,7 +176,10 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
             document.querySelector(".main").style.display = "none"
             document.querySelector(".chat").style.display = "block";
             gettingaccount();
-            unsubscribe();
+            client.subscribe(
+                `databases.${DBID}.collections.${CID}.documents`, () => {
+                    unsubscribe();
+                })
 
 
         }, function () {
@@ -244,7 +247,7 @@ const targetNode = document.querySelector(".chat-box");
 const observerCallback = function () {
     document.querySelectorAll(".mess").forEach(e => {
         if (e.querySelector(".chat-m").innerHTML !== accountdetails.$id) {
-            if(e.querySelector(".icons"))
+            if (e.querySelector(".icons"))
                 e.querySelector(".icons").remove();
         }
     })

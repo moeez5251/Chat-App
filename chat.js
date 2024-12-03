@@ -1,7 +1,4 @@
-client.subscribe(
-    `databases.${DBID}.collections.${CID}.documents`, () => {
-        unsubscribe();
-    })
+
 window.addEventListener("load", () => {
     setTimeout(() => {
         document.querySelector(".loading").style.top = "-200%";

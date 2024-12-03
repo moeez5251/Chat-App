@@ -176,6 +176,7 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
             document.querySelector(".main").style.display = "none"
             document.querySelector(".chat").style.display = "block";
             gettingaccount();
+            unsubscribe();
             client.subscribe(
                 `databases.${DBID}.collections.${CID}.documents`, () => {
                     unsubscribe();

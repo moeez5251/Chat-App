@@ -1,4 +1,9 @@
-window.addEventListener("load", () => {
+client.subscribe(
+    `databases.${DBID}.collections.${CID}.documents`, (r) => {
+        console.log(r);
+        unsubscribe();
+    })
+window.addEventListener("load", () => {    
     setTimeout(() => {
         document.querySelector(".loading").style.top = "-200%";
     }, 2000);
@@ -178,11 +183,10 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
             gettingaccount();
             unsubscribe();
             client.subscribe(
-                `databases.${DBID}.collections.${CID}.documents`, () => {
+                `databases.${DBID}.collections.${CID}.documents`, (r) => {
+                    console.log(r);
                     unsubscribe();
                 })
-
-
         }, function () {
             document.querySelector(".error__title").innerHTML = "Invalid Email / Password";
             document.querySelector(".error").classList.add("right")
@@ -226,6 +230,7 @@ document.querySelector(".send-button").addEventListener("click", () => {
     })
 
 })
+
 document.querySelector(".logout span").addEventListener("click", () => {
     account.deleteSession("")
         .then(() => {

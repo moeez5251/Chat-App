@@ -1,7 +1,7 @@
-client
-    .setEndpoint('https://cloud.appwrite.io/v1')
-    .setProject('670b90ac0015a41ad3de');
-
+client.subscribe(
+    `databases.${DBID}.collections.${CID}.documents`, () => {
+        unsubscribe();
+    })
 window.addEventListener("load", () => {
     setTimeout(() => {
         document.querySelector(".loading").style.top = "-200%";
@@ -18,8 +18,8 @@ async function gettingaccount() {
 
 async function gettingid(a) {
     let promise = await databases.listDocuments(
-        "670b9206003d3b420b50",
-        "670b923a0031c8e659ec",
+        `${DBID}`,
+        `${CID}`,
 
     );
     return (promise.documents[a].$id);
@@ -28,8 +28,8 @@ async function gettingid(a) {
 const unsubscribe = () => {
 
     let promise = databases.listDocuments(
-        "670b9206003d3b420b50",
-        "670b923a0031c8e659ec",
+        `${DBID}`,
+        `${CID}`,
 
     );
     promise.then(function (response) {
@@ -55,8 +55,8 @@ const unsubscribe = () => {
                 </div>
             </div>`
             document.querySelector(".chat-box").scrollTop = document.querySelector(".chat-box").scrollHeight;
-        }
 
+        }
         document.querySelectorAll(".editor").forEach((element, index) => {
             element.addEventListener("click", () => {
                 (async function update() {
@@ -67,16 +67,18 @@ const unsubscribe = () => {
                     }
                     const result = await databases.updateDocument(
 
-                        '670b9206003d3b420b50',
-                        '670b923a0031c8e659ec',
+                        `${DBID}`,
+                        `${CID}`,
                         `${id}`,
                         {
                             "Message": `${Updated_doc}`,
                             "Time": `${new Date().toDateString()} ${new Date().toTimeString().split("GMT")[0]}`
 
                         },
-                    );
-                })()
+                    )
+                }
+
+                )()
             })
         })
         document.querySelectorAll(".delete").forEach((element, index) => {
@@ -87,8 +89,8 @@ const unsubscribe = () => {
 
                         const result = await databases.deleteDocument(
 
-                            '670b9206003d3b420b50',
-                            '670b923a0031c8e659ec',
+                            `${DBID}`,
+                            `${CID}`,
                             `${id}`,
                         );
                     }
@@ -102,21 +104,9 @@ const unsubscribe = () => {
     });
 
 }
-let globalIntervalID;
-function startInterval() {
-    globalIntervalID = setInterval(() => {
-        unsubscribe();
-    }, 500);
-}
 
-function stopGlobalInterval() {
-    if (globalIntervalID) {
-        clearInterval(globalIntervalID);
-    }
-}
 
 if (localStorage.getItem("cookieFallback") === null || localStorage.getItem("cookieFallback") === '[]') {
-    stopGlobalInterval();
     localStorage.removeItem("cookieFallback");
     document.querySelector(".main").style.display = "block";
     document.querySelector(".chat").style.display = "none";
@@ -124,8 +114,8 @@ if (localStorage.getItem("cookieFallback") === null || localStorage.getItem("coo
 else {
     document.querySelector(".main").style.display = "none";
     document.querySelector(".chat").style.display = "block";
-    startInterval();
     gettingaccount();
+    unsubscribe();
 }
 document.querySelectorAll(".passwords").forEach(e => {
     e.querySelector("span").addEventListener("click", () => {
@@ -188,8 +178,9 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
         function () {
             document.querySelector(".main").style.display = "none"
             document.querySelector(".chat").style.display = "block";
-            startInterval();
             gettingaccount();
+            unsubscribe();
+
 
         }, function () {
             document.querySelector(".error__title").innerHTML = "Invalid Email / Password";
@@ -219,8 +210,8 @@ document.querySelector(".send-button").addEventListener("click", () => {
         return;
     }
     const promise = databases.createDocument(
-        '670b9206003d3b420b50',
-        '670b923a0031c8e659ec',
+        `${DBID}`,
+        `${CID}`,
         Appwrite.ID.unique(),
         {
             "Message": `${document.querySelector(".message-inp").value}`,
@@ -237,22 +228,11 @@ document.querySelector(".send-button").addEventListener("click", () => {
 document.querySelector(".logout span").addEventListener("click", () => {
     account.deleteSession("")
         .then(() => {
-            stopGlobalInterval();
             document.querySelector(".main").style.display = "block";
             document.querySelector(".chat").style.display = "none";
         })
 
 })
-const targetNode = document.querySelector(".chat-box");
-
-const observerCallback = function () {
-    document.querySelectorAll(".mess").forEach(e => {
-        if (e.querySelector(".chat-m").innerHTML !== accountdetails.$id) {
-            e.querySelector(".icons").style.display = "none";
-        }
-    })
-};
-
 window.addEventListener("keydown", (e) => {
     if (document.querySelector(".message-inp").value.trim() !== "") {
         let button = document.querySelector(".send-button");
@@ -261,6 +241,18 @@ window.addEventListener("keydown", (e) => {
         }
     }
 })
+
+const targetNode = document.querySelector(".chat-box");
+
+const observerCallback = function () {
+    document.querySelectorAll(".mess").forEach(e => {
+        if (e.querySelector(".chat-m").innerHTML !== accountdetails.$id) {
+            if(e.querySelector(".icons"))
+                e.querySelector(".icons").remove();
+        }
+    })
+};
+
 const observerOptions = {
     childList: true,
     subtree: true

@@ -21,7 +21,15 @@ async function gettingid(a) {
     );
     return (promise.documents[a].$id);
 }
+function isHTML(str) {
+    const htmlDoc = new DOMParser().parseFromString(str, "text/html");
+    const containsHTML = Array.from(htmlDoc.body.childNodes).some(node => node.nodeType === 1);
 
+    const containsCSS = /<style[\s\S]*?>[\s\S]*?<\/style>/i.test(str);
+    const containsJS = /<script[\s\S]*?>[\s\S]*?<\/script>/i.test(str);
+
+    return containsHTML || containsCSS || containsJS;
+}
 const unsubscribe = () => {
 
     let promise = databases.listDocuments(
@@ -62,7 +70,7 @@ const unsubscribe = () => {
                     if (Updated_doc === null) {
                         return;
                     }
-                    if (Updated_doc) {
+                    if (isHTML(Updated_doc)) {
                         return;
                     }
                     const result = await databases.updateDocument(
@@ -196,15 +204,7 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
 setInterval(() => {
     document.querySelector(".chat-box").style.borderColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
 }, 1000);
-function isHTML(str) {
-    const htmlDoc = new DOMParser().parseFromString(str, "text/html");
-    const containsHTML = Array.from(htmlDoc.body.childNodes).some(node => node.nodeType === 1);
 
-    const containsCSS = /<style[\s\S]*?>[\s\S]*?<\/style>/i.test(str);
-    const containsJS = /<script[\s\S]*?>[\s\S]*?<\/script>/i.test(str);
-
-    return containsHTML || containsCSS || containsJS;
-}
 
 
 document.querySelector(".send-button").addEventListener("click", () => {

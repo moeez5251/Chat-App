@@ -62,6 +62,9 @@ const unsubscribe = () => {
                     if (Updated_doc === null) {
                         return;
                     }
+                    if (Updated_doc) {
+                        return;
+                    }
                     const result = await databases.updateDocument(
 
                         `${DBID}`,

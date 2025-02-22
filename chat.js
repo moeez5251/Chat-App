@@ -193,6 +193,15 @@ document.querySelector(".form2").addEventListener("submit", (e) => {
 setInterval(() => {
     document.querySelector(".chat-box").style.borderColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
 }, 1000);
+function isHTML(str) {
+    const htmlDoc = new DOMParser().parseFromString(str, "text/html");
+    const containsHTML = Array.from(htmlDoc.body.childNodes).some(node => node.nodeType === 1);
+
+    const containsCSS = /<style[\s\S]*?>[\s\S]*?<\/style>/i.test(str);
+    const containsJS = /<script[\s\S]*?>[\s\S]*?<\/script>/i.test(str);
+
+    return containsHTML || containsCSS || containsJS;
+}
 
 
 document.querySelector(".send-button").addEventListener("click", () => {
@@ -203,6 +212,9 @@ document.querySelector(".send-button").addEventListener("click", () => {
             document.querySelector(".error").classList.remove("right")
 
         }, 1000);
+        return;
+    }
+    if (isHTML(document.querySelector(".message-inp").value.trim())) {
         return;
     }
     const promise = databases.createDocument(
@@ -254,7 +266,7 @@ const observerCallback = function () {
             `databases.${DBID}.collections.${CID}.documents`, (r) => {
                 unsubscribe();
             })
-            a=false;
+        a = false;
     }
 };
 
